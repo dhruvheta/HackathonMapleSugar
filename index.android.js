@@ -16,7 +16,7 @@ import {
 //    );
 //  }
 import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
-import PollsList from './android/app/List/PollsList'
+import PollsList from './components/List/PollsList'
 
 
 class myapp extends Component {
@@ -44,11 +44,11 @@ class myapp extends Component {
 
     if (this.state.user) {
       return (
-
         <View style={styles.container}>
           <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 20}}>Welcome {this.state.user.name}</Text>
           <Text style={{marginBottom: 20}}>Your email is: {this.state.user.email}</Text>
-          <PollsList />
+
+          <PollsList guser={this.state.user.name}/>
 
           <TouchableOpacity onPress={() => {this._signOut(); }}>
             <View style={{marginTop: 50}}>
@@ -56,6 +56,7 @@ class myapp extends Component {
             </View>
           </TouchableOpacity>
         </View>
+
       );
     }
   }

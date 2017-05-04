@@ -8,16 +8,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-// import Instructions from './android/app/help/instructions'
-// class AwesomeProject extends Component {
-//  render() {
-//    return (
-//      <Instructions />
-//    );
-//  }
 import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
 import PollsList from './components/List/PollsList'
-
+import Instructions from './components/help/instructions'
 
 class USnack extends Component {
   constructor(props) {
@@ -44,19 +37,7 @@ class USnack extends Component {
 
     if (this.state.user) {
       return (
-        <View style={styles.container}>
-          <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 20}}>Welcome {this.state.user.name}</Text>
-          <Text style={{marginBottom: 20}}>Your email is: {this.state.user.email}</Text>
-
-          <PollsList guser={this.state.user.name}/>
-
-          <TouchableOpacity onPress={() => {this._signOut(); }}>
-            <View style={{marginTop: 50}}>
-              <Text>Log out</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-
+        <Instructions />
       );
     }
   }

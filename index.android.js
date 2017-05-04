@@ -5,12 +5,12 @@ import {
   Text,
   View,
   Alert,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 
 import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
 import PollsList from './components/List/PollsList'
-import Instructions from './components/help/instructions'
+import {PollsListStack} from './android/app/config/router'
 
 class USnack extends Component {
   constructor(props) {
@@ -37,7 +37,7 @@ class USnack extends Component {
 
     if (this.state.user) {
       return (
-        <Instructions />
+        <PollsListStack />
       );
     }
   }

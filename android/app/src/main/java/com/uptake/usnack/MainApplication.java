@@ -1,4 +1,4 @@
-package com.myapp;
+package com.uptake.usnack;
 
 import android.app.Application;
 

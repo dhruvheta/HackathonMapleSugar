@@ -81,6 +81,45 @@
           "status": 1
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:730570315128:android:50622377b02033e6",
+        "android_client_info": {
+          "package_name": "com.uptake.usnack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "730570315128-onslbft0uek1jngts9fta8i6ai2sd5h9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uptake.usnack",
+            "certificate_hash": "33ad9997cfdf58ab016483aac2da126651bb1754"
+          }
+        },
+        {
+          "client_id": "730570315128-8eqrb6pb8phkbnd7qlimghab4h199ori.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeSALqI7scM6685wWGQ9e16QS9vo7NQBI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
     }
   ],
   "configuration_version": "1"

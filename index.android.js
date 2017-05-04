@@ -19,7 +19,7 @@ import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
 import PollsList from './components/List/PollsList'
 
 
-class myapp extends Component {
+class USnack extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -108,4 +108,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('myapp', () => myapp);
+AppRegistry.registerComponent('usnack', () => USnack);

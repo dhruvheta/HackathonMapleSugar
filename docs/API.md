@@ -1,3 +1,5 @@
+URL: https://sleepy-sierra-94063.herokuapp.com/
+
 ## [GET] /polls
 
 Response:
@@ -17,6 +19,11 @@ Response:
 ```
 
 ## [GET] /poll/{id}
+
+#### Params
+| Key | Value |
+|-----|-------|
+| token | the user token from the google signin response |
 
 Response:
 ```json
@@ -50,7 +57,9 @@ Response:
             "sodium": 112,
             "sugar": 1.2,
             "fiber": 2.4
-          }
+          },
+          "hasUpvoted": true,
+          "hasDownvoted": false
         },
         ...
       ]
@@ -67,6 +76,7 @@ Response:
 | optionId | the option you are voting on (id from the option) |
 | upvote | (optional) true if upvoting |
 | downvote | (optional) true if downvoting |
+| token | the user token from the google signin response |
 
 #### Response
 The updated option object with updated counts
@@ -90,6 +100,8 @@ The updated option object with updated counts
     "sodium": 112,
     "sugar": 1.2,
     "fiber": 2.4
-  }
+  },
+  "hasUpvoted": true,
+  "hasDownvoted": false
 }
 ```

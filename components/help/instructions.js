@@ -74,4 +74,4 @@ export default class Instructions extends Component {
   }
 }
 
-AppRegistry.registerComponent('Instructions', () => AwesomeProject);
+AppRegistry.registerComponent('Instructions', () => USnack);

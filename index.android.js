@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
-import PollsList from './components/List/PollsList'
+//import PollsList from './components/List/PollsList'
 import {PollsListStack} from './android/app/config/router'
 
 class USnack extends Component {
@@ -89,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('usnack', () => USnack);
+AppRegistry.registerComponent('USnack', () => USnack);

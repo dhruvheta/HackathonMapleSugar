@@ -53,7 +53,7 @@ export default class ItemDetails extends Component {
       },
       thumbsUp: {
         height: 128,
-        margin 10,
+        margin:10,
         width: 128
       },
       thumbsView: {
@@ -86,7 +86,9 @@ export default class ItemDetails extends Component {
     return (
       <View style={this.styles.view}>
         <Image
-          source={require({this.item.imageUrl})}
+        //  source={uri: this.item.imageUrl}
+        source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
+
           style={this.styles.picture}
         />
         <View style={this.styles.detailView}>
@@ -104,12 +106,12 @@ export default class ItemDetails extends Component {
         <View style={this.styles.thumbsView}>
           <Image
             onButtonClick={this.onThumbsUpButtonClick}
-            source={require('./resources/images/thumbsup_128')}
+           source={require('./thumbsdown_128.png')}
             style={this.styles.thumbsUp}
           />
           <Image
             onButtonClick={this.onThumbsDownButtonClick}
-            source={require('./resources/images/thumbsdown_128')}
+            source={require('./thumbsdown_128.png')}
             style={this.styles.thumbsDown}
           />
         </View>

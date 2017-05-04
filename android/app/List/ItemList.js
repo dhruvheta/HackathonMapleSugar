@@ -71,7 +71,8 @@ export default class ItemList extends Component {
   }
 
   _onPress(rowID) {
-    Alert.alert(rowID);
+      this.props.navigation.navigate('ItemDetails')
+  //  Alert.alert(rowID);
  }
 }
 

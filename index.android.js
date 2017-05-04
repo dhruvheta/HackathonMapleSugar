@@ -25,7 +25,7 @@ class USnack extends Component {
   }
 
   render() {
-    if (!this.state.user) {
+    /*if (!this.state.user) {
       return (
         <View style={styles.container}>
          <Text style={{fontSize: 36, fontWeight: 'bold', marginBottom: 20}}>Welcome to uSnack</Text>
@@ -33,13 +33,13 @@ class USnack extends Component {
           <GoogleSigninButton style={{width: 120, height: 44}} color={GoogleSigninButton.Color.Light} size={GoogleSigninButton.Size.Icon} onPress={() => { this._signIn(); }}/>
         </View>
       );
-    }
+    }*/
 
-    if (this.state.user) {
+  //  if (this.state.user) {
       return (
         <PollsListStack />
       );
-    }
+  //  }
   }
 
   async _setupGoogleSignin() {

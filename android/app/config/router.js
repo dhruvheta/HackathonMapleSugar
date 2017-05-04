@@ -7,14 +7,10 @@ import ItemList from '../List/ItemList'
 
 export const PollsListStack = StackNavigator ({
   PollsList : {
-  //  screen: {
       screen: PollsList,
       navigationOptions: {
         title: 'Polls',
-        //style: {backgroundColor: '#F6F6F6',justifyContent: 'center'}
-      //  navigationStyles: {Navigator.NavigationBar.StylesIOS}
       }
-    //}
   },
   Detail : {
       screen: Detail,

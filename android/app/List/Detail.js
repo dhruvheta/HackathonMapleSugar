@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 
-export default class AwesomeProject extends Component {
+export default class Detail extends Component {
   constructor() {
     super();
 
@@ -25,11 +25,6 @@ export default class AwesomeProject extends Component {
         row: {
           flexDirection: 'row',
           justifyContent: 'center',
-          //padding: 30,
-        //  height: 33,
-        //  borderBottomColor: '#CCCCCC',
-          //borderBottomWidth:10
-          //backgroundColor: '#F6F6F6',
         },
         list: {
             flexDirection: 'row',
@@ -75,10 +70,9 @@ export default class AwesomeProject extends Component {
   }
 
   _onPress(rowID) {
-    //Alert.alert(rowID);
     this.props.navigation.navigate('ItemList')
   }
 
 }
 
-AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
+AppRegistry.registerComponent('Detail', () => USnack);

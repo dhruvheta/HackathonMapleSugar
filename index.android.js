@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { AppRegistry, Text } from 'react-native';
 
-import PollsList from './components/List/PollsList'
-
+import Instructions from './android/app/help/instructions'
 class AwesomeProject extends Component {
  render() {
    return (
-     <PollsList />
+     <Instructions />
    );
  }
 }

@@ -1241,37 +1241,155 @@ babelHelpers.toConsumableArray = function (arr) {
   }
 };
 })(typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : this);
-__d(/* AwesomeProject/index.android.js */function(global, require, module, exports) {var _react = require(12     ); // 12 = react
+__d(/* usnack/index.android.js */function(global, require, module, exports) {var _react = require(12     ); // 12 = react
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
 var _reactNative = require(45            ); // 45 = react-native
 
-var _PollsList = require(416                          ); // 416 = ./components/List/PollsList
+var _reactNativeGoogleSignin = require(416                         ); // 416 = react-native-google-signin
+
+var _PollsList = require(419                          ); // 419 = ./components/List/PollsList
 
 var _PollsList2 = babelHelpers.interopRequireDefault(_PollsList);
 
-var AwesomeProject = function (_Component) {
-  babelHelpers.inherits(AwesomeProject, _Component);
+var _instructions = require(420                             ); // 420 = ./components/help/instructions
 
-  function AwesomeProject() {
-    babelHelpers.classCallCheck(this, AwesomeProject);
-    return babelHelpers.possibleConstructorReturn(this, (AwesomeProject.__proto__ || Object.getPrototypeOf(AwesomeProject)).apply(this, arguments));
+var _instructions2 = babelHelpers.interopRequireDefault(_instructions);
+
+var USnack = function (_Component) {
+  babelHelpers.inherits(USnack, _Component);
+
+  function USnack(props) {
+    babelHelpers.classCallCheck(this, USnack);
+
+    var _this = babelHelpers.possibleConstructorReturn(this, (USnack.__proto__ || Object.getPrototypeOf(USnack)).call(this, props));
+
+    _this.state = {
+      user: null
+    };
+    return _this;
   }
 
-  babelHelpers.createClass(AwesomeProject, [{
+  babelHelpers.createClass(USnack, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this._setupGoogleSignin();
+    }
+  }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(_PollsList2.default, null);
+      var _this2 = this;
+
+      if (!this.state.user) {
+        return _react2.default.createElement(
+          _reactNative.View,
+          { style: styles.container },
+          _react2.default.createElement(
+            _reactNative.Text,
+            { style: { fontSize: 36, fontWeight: 'bold', marginBottom: 20 } },
+            'Welcome to uSnack'
+          ),
+          _react2.default.createElement(
+            _reactNative.Text,
+            { style: { fontSize: 16, marginBottom: 20 } },
+            ' Please login using your google account '
+          ),
+          _react2.default.createElement(_reactNativeGoogleSignin.GoogleSigninButton, { style: { width: 120, height: 44 }, color: _reactNativeGoogleSignin.GoogleSigninButton.Color.Light, size: _reactNativeGoogleSignin.GoogleSigninButton.Size.Icon, onPress: function onPress() {
+              _this2._signIn();
+            } })
+        );
+      }
+
+      if (this.state.user) {
+        return _react2.default.createElement(_instructions2.default, null);
+      }
+    }
+  }, {
+    key: '_setupGoogleSignin',
+    value: function _setupGoogleSignin() {
+      var user;
+      return regeneratorRuntime.async(function _setupGoogleSignin$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return regeneratorRuntime.awrap(_reactNativeGoogleSignin.GoogleSignin.hasPlayServices({ autoResolve: true }));
+
+            case 3:
+              _context.next = 5;
+              return regeneratorRuntime.awrap(_reactNativeGoogleSignin.GoogleSignin.configure({
+                webClientId: '730570315128-8eqrb6pb8phkbnd7qlimghab4h199ori.apps.googleusercontent.com',
+                offlineAccess: false
+              }));
+
+            case 5:
+              _context.next = 7;
+              return regeneratorRuntime.awrap(_reactNativeGoogleSignin.GoogleSignin.currentUserAsync());
+
+            case 7:
+              user = _context.sent;
+
+              console.log(user);
+              this.setState({ user: user });
+              _context.next = 15;
+              break;
+
+            case 12:
+              _context.prev = 12;
+              _context.t0 = _context['catch'](0);
+
+              console.log("Play services error", _context.t0.code, _context.t0.message);
+
+            case 15:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, null, this, [[0, 12]]);
+    }
+  }, {
+    key: '_signIn',
+    value: function _signIn() {
+      var _this3 = this;
+
+      _reactNativeGoogleSignin.GoogleSignin.signIn().then(function (user) {
+        console.log(user);
+        _this3.setState({ user: user });
+        _this3.forceUpdate();
+      }).catch(function (err) {
+        console.log('WRONG SIGNIN', err);
+      }).done();
+    }
+  }, {
+    key: '_signOut',
+    value: function _signOut() {
+      var _this4 = this;
+
+      _reactNativeGoogleSignin.GoogleSignin.revokeAccess().then(function () {
+        return _reactNativeGoogleSignin.GoogleSignin.signOut();
+      }).then(function () {
+        _this4.setState({ user: null });
+      }).done();
     }
   }]);
-  return AwesomeProject;
+  return USnack;
 }(_react.Component);
 
-_reactNative.AppRegistry.registerComponent('AwesomeProject', function () {
-  return AwesomeProject;
+var styles = _reactNative.StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF'
+  }
 });
-}, 0, null, "AwesomeProject/index.android.js");
+
+_reactNative.AppRegistry.registerComponent('usnack', function () {
+  return USnack;
+});
+}, 0, null, "usnack/index.android.js");
 __d(/* react/react.js */function(global, require, module, exports) {'use strict';
 
 module.exports = require(13           ); // 13 = ./lib/React
@@ -46522,7 +46640,223 @@ function throwOnWrongReactAPI(key) {
 
 module.exports = throwOnWrongReactAPI;
 }, 415, null, "throwOnWrongReactAPI");
-__d(/* AwesomeProject/components/List/PollsList.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+__d(/* react-native-google-signin/index.js */function(global, require, module, exports) {var GoogleSignin = require(417             ); // 417 = ./GoogleSignin
+module.exports = GoogleSignin;
+}, 416, null, "react-native-google-signin/index.js");
+__d(/* react-native-google-signin/GoogleSignin.android.js */function(global, require, module, exports) {var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(45            ); // 45 = react-native
+
+var RNGoogleSignin = _reactNative.NativeModules.RNGoogleSignin;
+
+
+var RNGoogleSigninButton = (0, _reactNative.requireNativeComponent)('RNGoogleSigninButton', {
+  name: 'RNGoogleSigninButton',
+  propTypes: babelHelpers.extends({}, _reactNative.View.propTypes, {
+    size: _react.PropTypes.number,
+    color: _react.PropTypes.number
+  })
+});
+
+var GoogleSigninButton = function (_Component) {
+  babelHelpers.inherits(GoogleSigninButton, _Component);
+
+  function GoogleSigninButton() {
+    babelHelpers.classCallCheck(this, GoogleSigninButton);
+    return babelHelpers.possibleConstructorReturn(this, (GoogleSigninButton.__proto__ || Object.getPrototypeOf(GoogleSigninButton)).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(GoogleSigninButton, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this._clickListener = _reactNative.DeviceEventEmitter.addListener('RNGoogleSigninButtonClicked', function () {
+        _this2.props.onPress && _this2.props.onPress();
+      });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this._clickListener && this._clickListener.remove();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(RNGoogleSigninButton, this.props);
+    }
+  }]);
+  return GoogleSigninButton;
+}(_react.Component);
+
+GoogleSigninButton.Size = {
+  Icon: RNGoogleSignin.BUTTON_SIZE_ICON,
+  Standard: RNGoogleSignin.BUTTON_SIZE_STANDARD,
+  Wide: RNGoogleSignin.BUTTON_SIZE_WIDE
+};
+
+GoogleSigninButton.Color = {
+  Auto: RNGoogleSignin.BUTTON_COLOR_AUTO,
+  Light: RNGoogleSignin.BUTTON_COLOR_LIGHT,
+  Dark: RNGoogleSignin.BUTTON_COLOR_DARK
+};
+
+var GoogleSigninError = function (_Error) {
+  babelHelpers.inherits(GoogleSigninError, _Error);
+
+  function GoogleSigninError(error, code) {
+    babelHelpers.classCallCheck(this, GoogleSigninError);
+
+    var _this3 = babelHelpers.possibleConstructorReturn(this, (GoogleSigninError.__proto__ || Object.getPrototypeOf(GoogleSigninError)).call(this, error));
+
+    _this3.name = 'GoogleSigninError';
+    _this3.code = code;
+    return _this3;
+  }
+
+  return GoogleSigninError;
+}(Error);
+
+var GoogleSignin = function () {
+  function GoogleSignin() {
+    babelHelpers.classCallCheck(this, GoogleSignin);
+
+    this._user = null;
+  }
+
+  babelHelpers.createClass(GoogleSignin, [{
+    key: 'hasPlayServices',
+    value: function hasPlayServices() {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { autoResolve: true };
+
+      return RNGoogleSignin.playServicesAvailable(params.autoResolve);
+    }
+  }, {
+    key: 'configure',
+    value: function configure() {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+      params = [params.scopes || [], params.webClientId || null, params.offlineAccess || false];
+
+      return RNGoogleSignin.configure.apply(RNGoogleSignin, babelHelpers.toConsumableArray(params));
+    }
+  }, {
+    key: 'currentUserAsync',
+    value: function currentUserAsync() {
+      var _this4 = this;
+
+      return new Promise(function (resolve, reject) {
+        var sucessCb = _reactNative.DeviceEventEmitter.addListener('RNGoogleSignInSilentSuccess', function (user) {
+          _this4._user = user;
+
+          RNGoogleSignin.getAccessToken(user).then(function (token) {
+            _this4._user.accessToken = token;
+            _this4._removeListeners(sucessCb, errorCb);
+            resolve(_this4._user);
+          }).catch(function (err) {
+            _this4._removeListeners(sucessCb, errorCb);
+            resolve(_this4._user);
+          });
+        });
+
+        var errorCb = _reactNative.DeviceEventEmitter.addListener('RNGoogleSignInSilentError', function (err) {
+          _this4._removeListeners(sucessCb, errorCb);
+          resolve(null);
+        });
+
+        RNGoogleSignin.currentUserAsync();
+      });
+    }
+  }, {
+    key: 'currentUser',
+    value: function currentUser() {
+      return babelHelpers.extends({}, this._user);
+    }
+  }, {
+    key: 'signIn',
+    value: function signIn() {
+      var _this5 = this;
+
+      return new Promise(function (resolve, reject) {
+        var sucessCb = _reactNative.DeviceEventEmitter.addListener('RNGoogleSignInSuccess', function (user) {
+          _this5._user = user;
+          RNGoogleSignin.getAccessToken(user).then(function (token) {
+            _this5._user.accessToken = token;
+            _this5._removeListeners(sucessCb, errorCb);
+            resolve(_this5._user);
+          }).catch(function (err) {
+            _this5._removeListeners(sucessCb, errorCb);
+            resolve(_this5._user);
+          });
+        });
+
+        var errorCb = _reactNative.DeviceEventEmitter.addListener('RNGoogleSignInError', function (err) {
+          _this5._removeListeners(sucessCb, errorCb);
+          reject(new GoogleSigninError(err.error, err.code));
+        });
+
+        RNGoogleSignin.signIn();
+      });
+    }
+  }, {
+    key: 'signOut',
+    value: function signOut() {
+      var _this6 = this;
+
+      return new Promise(function (resolve, reject) {
+        var sucessCb = _reactNative.DeviceEventEmitter.addListener('RNGoogleSignOutSuccess', function () {
+          _this6._removeListeners(sucessCb, errorCb);
+          resolve();
+        });
+
+        var errorCb = _reactNative.DeviceEventEmitter.addListener('RNGoogleSignOutError', function (err) {
+          _this6._removeListeners(sucessCb, errorCb);
+          reject(new GoogleSigninError(err.error, err.code));
+        });
+
+        _this6._user = null;
+        RNGoogleSignin.signOut();
+      });
+    }
+  }, {
+    key: 'revokeAccess',
+    value: function revokeAccess() {
+      var _this7 = this;
+
+      return new Promise(function (resolve, reject) {
+        var sucessCb = _reactNative.DeviceEventEmitter.addListener('RNGoogleRevokeSuccess', function () {
+          _this7._removeListeners(sucessCb, errorCb);
+          resolve();
+        });
+
+        var errorCb = _reactNative.DeviceEventEmitter.addListener('RNGoogleRevokeError', function (err) {
+          _this7._removeListeners(sucessCb, errorCb);
+          reject(new GoogleSigninError(err.error, err.code));
+        });
+
+        RNGoogleSignin.revokeAccess();
+      });
+    }
+  }, {
+    key: '_removeListeners',
+    value: function _removeListeners() {
+      for (var _len = arguments.length, listeners = Array(_len), _key = 0; _key < _len; _key++) {
+        listeners[_key] = arguments[_key];
+      }
+
+      listeners.forEach(function (lt) {
+        return lt.remove();
+      });
+    }
+  }]);
+  return GoogleSignin;
+}();
+
+module.exports = { GoogleSignin: new GoogleSignin(), GoogleSigninButton: GoogleSigninButton };
+}, 417, null, "react-native-google-signin/GoogleSignin.android.js");
+__d(/* usnack/components/List/PollsList.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
@@ -46620,7 +46954,106 @@ var PollList = function (_Component) {
 }(_react.Component);
 
 exports.default = PollList;
-}, 416, null, "AwesomeProject/components/List/PollsList.js");
+}, 419, null, "usnack/components/List/PollsList.js");
+__d(/* usnack/components/help/instructions.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(45            ); // 45 = react-native
+
+var Instructions = function (_Component) {
+  babelHelpers.inherits(Instructions, _Component);
+
+  function Instructions() {
+    babelHelpers.classCallCheck(this, Instructions);
+
+    var _this = babelHelpers.possibleConstructorReturn(this, (Instructions.__proto__ || Object.getPrototypeOf(Instructions)).call(this));
+
+    _this.instructions = ['Pick a poll.', 'Select a category of snack.', 'Upvote or downvote as many times you are allowed to.', 'When you are done, submit your vote and see the results.'];
+
+    _this.styles = _reactNative.StyleSheet.create({
+      evenRow: {
+        backgroundColor: '#999999',
+        color: '#FFFFFF',
+        fontSize: 24,
+        textAlign: 'center'
+      },
+      instructionView: {
+        flex: 1,
+        margin: 10
+      },
+      oddRow: {
+        backgroundColor: '#ffab17',
+        color: '#000000',
+        fontSize: 24,
+        textAlign: 'center'
+      },
+      pageTitle: {
+        color: '#000000',
+        fontSize: 40,
+        textAlign: 'center',
+        height: 50
+      },
+      view: {
+        backgroundColor: '#F6F6F6',
+        flex: 1,
+        justifyContent: 'center'
+      }
+    });
+    return _this;
+  }
+
+  babelHelpers.createClass(Instructions, [{
+    key: 'onBackButtonPress',
+    value: function onBackButtonPress() {
+      _reactNative.Alert.alert('Back button pressed!');
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var instructionList = this.instructions.map(function (instruction, index) {
+        return _react2.default.createElement(
+          _reactNative.Text,
+          { style: (index + 1) % 2 == 0 ? _this2.styles.evenRow : _this2.styles.oddRow },
+          index + 1,
+          '. ',
+          instruction
+        );
+      });
+
+      return _react2.default.createElement(
+        _reactNative.View,
+        { style: this.styles.view },
+        _react2.default.createElement(
+          _reactNative.Text,
+          { style: this.styles.pageTitle },
+          'How It Works'
+        ),
+        _react2.default.createElement(
+          _reactNative.View,
+          { style: this.styles.instructionView },
+          instructionList
+        ),
+        _react2.default.createElement(_reactNative.Button, { onPress: this.onBackButtonPress, title: 'Back', color: '#333333' })
+      );
+    }
+  }]);
+  return Instructions;
+}(_react.Component);
+
+exports.default = Instructions;
+
+
+_reactNative.AppRegistry.registerComponent('Instructions', function () {
+  return AwesomeProject;
+});
+}, 420, null, "usnack/components/help/instructions.js");
 ;require(138);
 ;require(0);
 //# sourceMappingURL=index.android.map

@@ -54213,10 +54213,12 @@ var _reactNative = require(45            ); // 45 = react-native
 var ItemList = function (_Component) {
   babelHelpers.inherits(ItemList, _Component);
 
-  function ItemList() {
+  function ItemList(props) {
     babelHelpers.classCallCheck(this, ItemList);
 
-    var _this = babelHelpers.possibleConstructorReturn(this, (ItemList.__proto__ || Object.getPrototypeOf(ItemList)).call(this));
+    var _this = babelHelpers.possibleConstructorReturn(this, (ItemList.__proto__ || Object.getPrototypeOf(ItemList)).call(this, props));
+
+    _this.pollCategory = _this.props.navigation.state.params;
 
     var ds = new _reactNative.ListView.DataSource({ rowHasChanged: function rowHasChanged(r1, r2) {
         return r1 !== r2;
@@ -54225,7 +54227,7 @@ var ItemList = function (_Component) {
       _reactNative.Alert.alert('List item has been pressed!' + _this.props.name);
     };
     _this.state = {
-      dataSource: ds.cloneWithRows(['Item1', 'Item2', 'Item3', 'Item4', 'Item5', 'Item6', 'Item7', 'Item8', 'Item9', 'Item10', 'Item11', 'Item12', 'Item13', 'Item14', 'Item15', 'Item16'])
+      dataSource: ds.cloneWithRows(_this.pollCategory.options)
     };
     _this.styles = _reactNative.StyleSheet.create({
       row: {
@@ -54269,12 +54271,12 @@ var ItemList = function (_Component) {
                   { name: rowData, style: _this2.styles.row },
                   _react2.default.createElement(_reactNative.Image, {
                     style: { width: 70, height: 70, padding: 5 },
-                    source: { uri: 'https://facebook.github.io/react/img/logo_og.png' }
+                    source: { uri: rowData.imageUrl }
                   }),
                   _react2.default.createElement(
                     _reactNative.Text,
                     { style: { fontSize: 35 } },
-                    rowData
+                    rowData.name
                   )
                 )
               );

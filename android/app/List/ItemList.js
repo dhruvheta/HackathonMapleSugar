@@ -13,14 +13,17 @@ import {
 
 
 export default class ItemList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    this.pollCategory = this.props.navigation.state.params
+
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.onButtonPress = () => {
       Alert.alert('List item has been pressed!' + this.props.name);
     };
     this.state = {
-      dataSource: ds.cloneWithRows(['Item1', 'Item2','Item3','Item4','Item5','Item6','Item7','Item8','Item9','Item10','Item11','Item12','Item13','Item14','Item15','Item16']),
+      dataSource: ds.cloneWithRows(this.pollCategory.options),
     };
     this.styles = StyleSheet.create({
         row: {
@@ -56,9 +59,9 @@ export default class ItemList extends Component {
               <View name={rowData} style={this.styles.row} >
               <Image
                 style={{width: 70, height: 70, padding:5}}
-                source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
+                source={{uri: rowData.imageUrl}}
               />
-                <Text style={{fontSize:35}}>{rowData}</Text>
+                <Text style={{fontSize:35}}>{rowData.name}</Text>
               </View>
             </TouchableHighlight>
           );

@@ -50,8 +50,6 @@ class USnack extends Component {
         </View>
       );
     }
-
-
   }
 
   async _setupGoogleSignin() {

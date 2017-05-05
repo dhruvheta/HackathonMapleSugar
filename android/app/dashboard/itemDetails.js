@@ -12,7 +12,10 @@ import {
 } from 'react-native';
 
 const onThumbsDownButtonClick = () => {
-  Alert.alert('Button has been pressed!');
+  Alert.alert('downvoted!');
+};
+const onThumbsUpButtonClick = () => {
+  Alert.alert('You just voted!');
 };
 export default class ItemDetails extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -75,14 +78,14 @@ export default class ItemDetails extends Component {
         margin: 20
       },
       view: {
-        backgroundColor: '#F6F6F6',
+        backgroundColor: 'white',
         flex: 1,
         justifyContent: 'center',
       }
     });
   }
 
-  onThumbsUpButtonClick() {
+  onThumbsUpButtonClick1() {
     Alert.alert('Thumbs up!');
   }
 
@@ -114,18 +117,16 @@ export default class ItemDetails extends Component {
           <Text style={this.styles.detailText}>Fiber -> {this.category.attributes.fiber}</Text>
         </View>
         <View style={this.styles.thumbsView}>
-          <Image
-          onButtonClick={() => {
-                    this.onThumbsUpButtonClick();
-                  }}
-           source={require('./thumbsup_128.png')}
+          <TouchableHighlight onPress={this.onThumbsUpButtonClick}><Image
+
+           source={require('./thumbup100.jpg')}
             style={this.styles.thumbsUp}
-          />
-          <Image
-            onPress={this.onThumbsDownButtonClick}
-            source={require('./thumbsdown_128.png')}
+          /></TouchableHighlight>
+          <TouchableHighlight onPress={this.onThumbsDownButtonClick}><Image
+
+            source={require('./thumbdown100.jpg')}
             style={this.styles.thumbsDown}
-          />
+          /></TouchableHighlight>
         </View>
       </View>
     );

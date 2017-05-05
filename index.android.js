@@ -63,7 +63,6 @@ class USnack extends Component {
       });
 
       const user = await GoogleSignin.currentUserAsync();
-      Alert.alert('User: ' + user);
       this.setState({user: user});
     }
     catch(err) {

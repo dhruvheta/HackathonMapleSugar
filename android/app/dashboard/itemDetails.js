@@ -75,12 +75,6 @@ export default class ItemDetails extends Component {
         margin:10,
         width: 128
       },
-      thumbsUpVoted: {
-        height: 128,
-        margin:10,
-        width: 128,
-        //backgroundColor: 'rgba(0,0,0,0.5)'
-      },
       thumbsView: {
         alignItems: 'center',
         flexDirection: 'row',
@@ -95,9 +89,9 @@ export default class ItemDetails extends Component {
     });
   }
 
-  async onThumbsUpButtonClick() {
-    this.upvote = true;
-    this.downvote = false;
+  async onThumbButtonClick(upvote, downvote){
+    this.upvote = upvote;
+    this.downvote = downvote;
     try {
       const storedUser = await AsyncStorage.getItem('@DataStore:user');
       this.state.user = JSON.parse(storedUser)
@@ -123,39 +117,6 @@ export default class ItemDetails extends Component {
       console.log(responseJson)
       this.hasVoted = responseJson
 
-      this.setState({
-        category: responseJson.option,
-      })
-    });
-}
-
-  async onThumbsDownButtonClick() {
-    this.upvote = false;
-    this.downvote = true;
-    console.log(this.category.upvoteCount);
-    try {
-      const storedUser = await AsyncStorage.getItem('@DataStore:user');
-      this.state.user = JSON.parse(storedUser)
-    } catch (error) {
-      // Error saving data
-    }
-      console.log(this.category)
-    data = {  optionId: this.category.id, upvote: this.upvote, downvote:this.downvote,token: this.state.user.idToken }
-    let params = querystring.stringify(data);
-    url = `https://sleepy-sierra-94063.herokuapp.com/poll/${this.category.pollId}/vote?${params}`
-
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/x-www-form-urlencoded',
-      },
-      body: params
-    })
-    .then((response) => {
-      return response.json()})
-    .then((responseJson) => {
-      console.log('done')
-      console.log(responseJson)
       this.setState({
         category: responseJson.option,
       })
@@ -187,17 +148,17 @@ export default class ItemDetails extends Component {
         </View>
         <View style={this.styles.thumbsView}>
           <TouchableHighlight onPress={() => {
-                    this.onThumbsUpButtonClick(this.state.category);
+                    this.onThumbButtonClick(true, false);
                   }}>
                   <Image
-           source={this.hasVoted ? require('./thumbsup100grey.jpg') : require('./thumbup100.jpg')}
-            style={this.hasVoted ? this.styles.thumbsUpVoted : this.styles.thumbsUp}
+           source={this.state.category.hasUpvoted ? require('./thumbsup100grey.jpg') : require('./thumbup100.jpg')}
+            style={this.styles.thumbsUp}
           /></TouchableHighlight>
           <TouchableHighlight  onPress={() => {
-                    this.onThumbsDownButtonClick(this.state.category);
+                    this.onThumbButtonClick(false, true);
                   }}><Image
 
-            source={this.hasDownvoted ? require('./thumbdown100grey.jpg') : require('./thumbdown100.jpg')}
+            source={this.state.category.hasDownvoted  ? require('./thumbdown100grey.jpg') : require('./thumbdown100.jpg')}
             style={this.styles.thumbsDown}
           /></TouchableHighlight>
         </View>

@@ -27,12 +27,15 @@ export default class Detail extends Component {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-    this.pollId = props.navigation.state.params
+    this.pollId = props.navigation.state.params;
 
     this.state = {
       dataSource: ds.cloneWithRows(['cat1', 'cat2', 'cat3', 'cat4', 'cat5', 'cat6','cat7','cat8']),
     };
     this.styles = StyleSheet.create({
+        resultsButton: {
+          height: 100
+        },
         row: {
           flexDirection: 'row',
           justifyContent: 'center',
@@ -54,14 +57,14 @@ export default class Detail extends Component {
 }
 
   componentDidMount() {
-    const {params} = this.props.navigation.state
-    this.getPollsList()
+    const {params} = this.props.navigation.state;
+    this.getPollsList();
   }
 
   async getPollsList() {
     try {
       const storedUser = await AsyncStorage.getItem('@DataStore:user');
-      this.state.user = JSON.parse(storedUser)
+      this.state.user = JSON.parse(storedUser);
     } catch (error) {
       // Error saving data
     }
@@ -70,8 +73,8 @@ export default class Detail extends Component {
     return fetch(url)
       .then((response) => response.json())
       .then((responseJson) => {
-        this.handlePollsList(responseJson.poll.categories);
         this.poll = responseJson.poll;
+        this.handlePollsList(responseJson.poll.categories);
       })
       .catch((error) => {
         console.error(error);
@@ -85,14 +88,16 @@ export default class Detail extends Component {
      });
    }
 
-   onResultsButtonPress() {
-     this.props.navigation.navigate('Results', this.poll);
-   }
+  onResultsButtonPress() {
+    if(this.poll) {
+      this.props.navigation.navigate('Results', this.poll);
+    }
+  }
 
   render() {
     return (
       <View>
-        <Button title='Results' onPress={() => {
+        <Button title='Results' style={this.styles.resultsButton} onPress={() => {
                   this.onResultsButtonPress();
                 }}></Button>
         <ListView contentContainerStyle={this.styles.list}
@@ -114,7 +119,7 @@ export default class Detail extends Component {
   }
 
   _onPress(rowData) {
-    this.props.navigation.navigate('ItemList', rowData)
+    this.props.navigation.navigate('ItemList', rowData);
   }
 
 }

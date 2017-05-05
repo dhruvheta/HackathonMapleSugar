@@ -74,7 +74,6 @@ class USnack extends Component {
     .then(async (user) => {
       data = { userId: user.id, googleToken: user.idToken, photo: user.photo, name: user.name, email: user.email }
       let params = querystring.stringify(data);
-      console.log(params)
       url = `https://sleepy-sierra-94063.herokuapp.com/users/add?${params}`
       await fetch(url, {
         method: 'POST',
@@ -91,10 +90,12 @@ class USnack extends Component {
             console.log(error)
           }
         })
-      user
+      return user
     })
     .then((user) => {
+      console.log("setting state")
       this.setState({user: user});
+      console.log(this.state.user)
       this.forceUpdate();
     })
     .catch((err) => {

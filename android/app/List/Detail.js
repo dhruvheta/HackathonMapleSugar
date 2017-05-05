@@ -9,22 +9,21 @@ import {
   View,
   Alert,
   ToolbarAndroid,
+  Button
 } from 'react-native';
 
 
 export default class Detail extends Component {
-  constructor() {
-    super();
-
+  static navigationOptions = {
+    title: 'Categories',
+    headerRight: <Button title="Info" />,
+  };
+  constructor(props) {
+    super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-     //const value = this.props.navigation.state.params
-     const state = this.props.navigation;
-    // state.routeName === 'Profile'
-    //return (
-      //<Text>Name: {state.params.name}</Text>
-    //);
-    console.log('stateeeeeee');
-    console.log(state.params)
+
+    let id = props.navigation.state.params
+
     this.state = {
       dataSource: ds.cloneWithRows(['cat1', 'cat2', 'cat3', 'cat4', 'cat5', 'cat6','cat7','cat8']),
     };
@@ -49,6 +48,11 @@ export default class Detail extends Component {
       });
 }
 
+  componentDidMount() {
+    const {params} = this.props.navigation.state
+    console.log(params)
+  }
+
   /*getPollsList() {
     return fetch('https://sleepy-sierra-94063.herokuapp.com/poll')
       .then((response) => response.json())
@@ -68,7 +72,6 @@ export default class Detail extends Component {
    }*/
 
   render() {
-
     return (
       <View>
 

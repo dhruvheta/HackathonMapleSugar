@@ -10,7 +10,7 @@ import {
   Alert,
   ToolbarAndroid,
 } from 'react-native';
-//import EStyleSheet from 'react-native-extended-stylesheet';
+
 export default class PollsList extends Component {
   constructor() {
     super();

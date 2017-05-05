@@ -5,8 +5,10 @@ import {
   Text,
   View,
   Alert,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from 'react-native';
+import querystring from 'querystring';
 
 import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
 //import PollsList from './components/List/PollsList'
@@ -15,17 +17,26 @@ import {PollsListStack} from './android/app/config/router'
 class USnack extends Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       user: null
     };
   }
 
-  componentDidMount() {
-    this._setupGoogleSignin();
+  async componentDidMount() {
+    try {
+      const storedUser = await AsyncStorage.getItem('@DataStore:user');
+      this.setState({ user: JSON.parse(storedUser) })
+    } catch (error) {
+      // Error saving data
+    }
+    if (!this.state.user) {
+      this._setupGoogleSignin();
+    }
   }
 
   render() {
-    /*if (!this.state.user) {
+    if (!this.state.user) {
       return (
         <View style={styles.container}>
          <Text style={{fontSize: 36, fontWeight: 'bold', marginBottom: 20}}>Welcome to uSnack</Text>
@@ -33,13 +44,13 @@ class USnack extends Component {
           <GoogleSigninButton style={{width: 120, height: 44}} color={GoogleSigninButton.Color.Light} size={GoogleSigninButton.Size.Icon} onPress={() => { this._signIn(); }}/>
         </View>
       );
-    }*/
+    }
 
-  //  if (this.state.user) {
+    if (this.state.user) {
       return (
         <PollsListStack />
       );
-  //  }
+    }
   }
 
   async _setupGoogleSignin() {
@@ -51,18 +62,37 @@ class USnack extends Component {
       });
 
       const user = await GoogleSignin.currentUserAsync();
-      console.log(user);
-      this.setState({user});
+      this.setState({user: user});
     }
     catch(err) {
       console.log("Play services error", err.code, err.message);
     }
   }
 
-  _signIn() {
+  async _signIn() {
     GoogleSignin.signIn()
+    .then(async (user) => {
+      data = { userId: user.id, token: user.idToken, photo: user.photo, name: user.name, email: user.email }
+      let params = querystring.stringify(data);
+      url = `https://sleepy-sierra-94063.herokuapp.com/users/add?${params}`
+      await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/x-www-form-urlencoded',
+        },
+        body: params
+      })
+        .then(async (response) => {
+          try {
+             await AsyncStorage.setItem('@DataStore:user', JSON.stringify(user));
+          } catch (error) {
+            // Error saving data
+            console.log(error)
+          }
+        })
+      user
+    })
     .then((user) => {
-      console.log(user);
       this.setState({user: user});
       this.forceUpdate();
     })

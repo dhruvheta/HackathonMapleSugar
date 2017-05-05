@@ -17,7 +17,7 @@ import {PollsListStack} from './android/app/config/router'
 class USnack extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       user: null
     };
@@ -36,7 +36,12 @@ class USnack extends Component {
   }
 
   render() {
-    if (!this.state.user) {
+    if (this.state.user) {
+      return (
+        <PollsListStack />
+      );
+    }
+    else {
       return (
         <View style={styles.container}>
          <Text style={{fontSize: 36, fontWeight: 'bold', marginBottom: 20}}>Welcome to uSnack</Text>
@@ -46,11 +51,7 @@ class USnack extends Component {
       );
     }
 
-    if (this.state.user) {
-      return (
-        <PollsListStack />
-      );
-    }
+
   }
 
   async _setupGoogleSignin() {
@@ -62,6 +63,7 @@ class USnack extends Component {
       });
 
       const user = await GoogleSignin.currentUserAsync();
+      Alert.alert('User: ' + user);
       this.setState({user: user});
     }
     catch(err) {
@@ -87,7 +89,7 @@ class USnack extends Component {
              await AsyncStorage.setItem('@DataStore:user', JSON.stringify(user));
           } catch (error) {
             // Error saving data
-            console.log(error)
+            Alert.alert.log(error)
           }
         })
       return user
@@ -99,7 +101,7 @@ class USnack extends Component {
       this.forceUpdate();
     })
     .catch((err) => {
-      console.log('WRONG SIGNIN', err);
+      Alert.alert('WRONG SIGNIN: ' + err);
     })
     .done();
   }

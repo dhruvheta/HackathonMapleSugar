@@ -13,14 +13,16 @@ import {
   AsyncStorage
 } from 'react-native';
 
-const onButtonPress = () => {
-  Alert.alert('Button has been pressed!');
-};
 export default class Detail extends Component {
   static navigationOptions = {
     title: 'Categories',
-    headerRight: <Button title="Info"  onPress={onButtonPress}/>
+    headerRight: <Button title="Info"  onPress={this.onHelpButtonPress}/>
   };
+
+  onHelpButtonPress = () => {
+    this.props.navigation.navigate('Instructions');
+  };
+
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -82,9 +84,14 @@ export default class Detail extends Component {
      });
    }
 
+   onResultsButtonPress() {
+     this.props.navigation.navigate('Results', this.state.dataSource);
+   }
+
   render() {
     return (
       <View>
+        <Button title='Results' onPress={this.onResultsButtonPress}></Button>
         <ListView contentContainerStyle={this.styles.list}
           dataSource={this.state.dataSource}
           renderRow={(rowData) => {

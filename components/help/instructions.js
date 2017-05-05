@@ -53,10 +53,6 @@ export default class Instructions extends Component {
     });
   }
 
-  onBackButtonPress() {
-    Alert.alert('Back button pressed!');
-  }
-
   render() {
     const instructionList = this.instructions.map((instruction, index) =>
       <Text style={(index + 1) % 2 == 0 ? this.styles.evenRow : this.styles.oddRow}>{index+1}. {instruction}</Text>
@@ -64,11 +60,9 @@ export default class Instructions extends Component {
 
     return (
       <View style={this.styles.view}>
-        <Text style={this.styles.pageTitle}>How It Works</Text>
         <View style={this.styles.instructionView}>
           {instructionList}
         </View>
-        <Button onPress={this.onBackButtonPress} title='Back' color='#333333'></Button>
       </View>
     );
   }

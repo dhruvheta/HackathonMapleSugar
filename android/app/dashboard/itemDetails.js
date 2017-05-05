@@ -11,12 +11,7 @@ import {
   View
 } from 'react-native';
 
-const onThumbsDownButtonClick = () => {
-  Alert.alert('downvoted!');
-};
-const onThumbsUpButtonClick = () => {
-  Alert.alert('You just voted!');
-};
+
 export default class ItemDetails extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: `${navigation.state.params.name}`
@@ -85,11 +80,11 @@ export default class ItemDetails extends Component {
     });
   }
 
-  onThumbsUpButtonClick1() {
+  onThumbsUpButtonClick() {
     Alert.alert('Thumbs up!');
   }
 
-  onThumbsDownButtonClick1() {
+  onThumbsDownButtonClick() {
     Alert.alert('Thumbs down!');
   }
 
@@ -117,12 +112,16 @@ export default class ItemDetails extends Component {
           <Text style={this.styles.detailText}>Fiber -> {this.category.attributes.fiber}</Text>
         </View>
         <View style={this.styles.thumbsView}>
-          <TouchableHighlight onPress={this.onThumbsUpButtonClick}><Image
-
+          <TouchableHighlight onPress={() => {
+                    this.onThumbsUpButtonClick(this.category);
+                  }}>
+                  <Image
            source={require('./thumbup100.jpg')}
             style={this.styles.thumbsUp}
           /></TouchableHighlight>
-          <TouchableHighlight onPress={this.onThumbsDownButtonClick}><Image
+          <TouchableHighlight  onPress={() => {
+                    this.onThumbsDownButtonClick(this.category);
+                  }}><Image
 
             source={require('./thumbdown100.jpg')}
             style={this.styles.thumbsDown}

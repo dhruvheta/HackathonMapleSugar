@@ -60,7 +60,7 @@ export default class Detail extends Component {
     return fetch(url)
       .then((response) => response.json())
       .then((responseJson) => {
-        this.handlePollsList(responseJson.categories);
+        this.handlePollsList(responseJson.poll.categories);
       })
       .catch((error) => {
         console.error(error);

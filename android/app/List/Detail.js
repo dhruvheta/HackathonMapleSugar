@@ -13,11 +13,13 @@ import {
   AsyncStorage
 } from 'react-native';
 
-
+const onButtonPress = () => {
+  Alert.alert('Button has been pressed!');
+};
 export default class Detail extends Component {
   static navigationOptions = {
     title: 'Categories',
-    headerRight: <Button title="Info" />,
+    headerRight: <Button title="Info"  onPress={onButtonPress}/>
   };
   constructor(props) {
     super(props);

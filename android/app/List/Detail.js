@@ -54,7 +54,7 @@ export default class Detail extends Component {
             justifyContent: 'center',
         },
       });
-}
+  }
 
   componentDidMount() {
     const {params} = this.props.navigation.state;

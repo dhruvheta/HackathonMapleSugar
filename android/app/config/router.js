@@ -4,7 +4,7 @@ import {StackNavigator} from 'react-navigation';
 import PollsList from '../List/PollsList'
 import Detail from '../List/Detail'
 import ItemList from '../List/ItemList'
-import ItemListDetails from '../dashboard/itemDetails'
+import ItemDetails from '../dashboard/ItemDetails'
 export const PollsListStack = StackNavigator ({
   PollsList : {
       screen: PollsList,
@@ -18,15 +18,9 @@ export const PollsListStack = StackNavigator ({
       screen: Detail,
   },
   ItemList : {
-      screen: ItemList,
-      navigationOptions: {
-        title: 'Items'
-      }
+      screen: ItemList
   },
-  ItemListDetails : {
-      screen: ItemListDetails,
-      navigationOptions: {
-        title: 'Item List Detail'
-      }
+  ItemDetails : {
+      screen: ItemDetails
   },
 })

@@ -13,6 +13,9 @@ import {
 
 
 export default class ItemList extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: `${navigation.state.params.name}`
+  });
   constructor(props) {
     super(props);
 
@@ -28,14 +31,27 @@ export default class ItemList extends Component {
     this.styles = StyleSheet.create({
         row: {
           flexDirection: 'row',
-          justifyContent: 'center',
-          padding: 30,
-          borderBottomColor: '#000000',
-          borderBottomWidth:10
+          //justifyContent: 'center',
+          //padding: 30,
+          flex:1,
+          borderBottomColor: '#cccccc',
+          borderBottomWidth:3,
+          //paddingLeft:5,
+          paddingTop:10,
+          paddingBottom:10,
         },
         thumb: {
           width: 64,
           height: 64,
+        },
+        item:{
+          flexDirection: 'row',
+          fontSize:20,
+          color: '#000000',
+          //width: 175,
+          paddingLeft:10,
+          //justifyContent: 'center',
+          backgroundColor: '#F6F6F6',
         }
       });
 }
@@ -45,7 +61,7 @@ export default class ItemList extends Component {
     return (
       <View>
 
-      <View style={{backgroundColor: '#F6F6F6',justifyContent: 'center'}}>
+      <View style={{backgroundColor: '#F6F6F6'}}>
 
       <View style={{padding:10}}></View>
 
@@ -58,10 +74,10 @@ export default class ItemList extends Component {
                     }}>
               <View name={rowData} style={this.styles.row} >
               <Image
-                style={{width: 70, height: 70, padding:5}}
+                style={{width: 70, height: 70,paddingRight:10,paddingLeft:15,marginLeft:10}}
                 source={{uri: rowData.imageUrl}}
               />
-                <Text style={{fontSize:35}}>{rowData.name}</Text>
+                <Text style={this.styles.item}>{rowData.name}</Text>
               </View>
             </TouchableHighlight>
           );
@@ -73,8 +89,8 @@ export default class ItemList extends Component {
     );
   }
 
-  _onPress(rowID) {
-      this.props.navigation.navigate('ItemDetails')
+  _onPress(rowData) {
+      this.props.navigation.navigate('ItemDetails',rowData)
   //  Alert.alert(rowID);
  }
 }

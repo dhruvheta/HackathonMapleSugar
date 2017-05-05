@@ -11,6 +11,13 @@ import {
   View
 } from 'react-native';
 
+const concat = (x,y) => x.concat(y)
+const flatMap = (f,xs) => xs.map(f).reduce(concat, [])
+
+Array.prototype.flatMap = function(f) {
+  return flatMap(f,this);
+};
+
 export default class Results extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +34,6 @@ export default class Results extends Component {
         backgroundColor: '#F6F6F6',
         flex: 1,
         justifyContent: 'center',
-        margin: '50 20 20 20'
       }
     });
   }
@@ -37,7 +43,7 @@ export default class Results extends Component {
       {return category.options;}
     );
     const resultList = items.map((result, index) =>
-      <Text style={this.styles.resultText}>{result.name}: {result.options.upvoteCount - result.options.downvoteCount}</Text>
+      <Text style={this.styles.resultText}>{result.name}: {result.upvoteCount - result.downvoteCount}</Text>
     );
 
     return (

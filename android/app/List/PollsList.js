@@ -10,9 +10,7 @@ import {
   Alert,
   ToolbarAndroid,
 } from 'react-native';
-
-//import {PollsListData} from './PollsListData'
-var test = [];
+//import EStyleSheet from 'react-native-extended-stylesheet';
 export default class PollsList extends Component {
   constructor() {
     super();
@@ -30,23 +28,28 @@ export default class PollsList extends Component {
         row: {
           flexDirection: 'row',
           justifyContent: 'center',
-          padding: 30,
-          borderBottomColor: '#000000',
-          borderBottomWidth:10
+        //  backgroundColor: 'white',
+        //  padding: 45,
+          //width:180,
+          backgroundColor: '#F6F6F6',
+          borderBottomColor: '#cccccc',
+          borderBottomWidth:3,
+          //paddingRight:10,
+          paddingLeft:5,
+          paddingTop:25,
+          paddingBottom:25,
           //backgroundColor: '#F6F6F6',
         },
-        thumb: {
-          width: 64,
-          height: 64,
-        },
-        text: {
-          flex: 1,
-        fontSize: 19,
-        },
-        toolbar: {
-          backgroundColor: '#e9eaed',
-          height: 56,
-        },
+        item:{
+          fontSize:22,
+          //padding: 35,
+          color: '#000000',
+          width: 175,
+          justifyContent: 'center',
+          backgroundColor: '#F6F6F6',
+          //padding: 25,
+          //width:150
+        }
       });
        this.getPollsList();
    }
@@ -75,17 +78,16 @@ export default class PollsList extends Component {
 
         <View style={{backgroundColor: '#F6F6F6',justifyContent: 'center'}}>
 
-        <View style={{padding:10}}></View>
 
         <ListView
           dataSource={this.state.dataSource}
           renderRow={(rowData) => {
             return (
               <TouchableHighlight  onPress={() => {
-                        this._onPress(rowData);
+                        this._onPress(rowData.id);
                       }}>
                 <View name={rowData} style={this.styles.row} >
-                  <Text style={{fontSize:35}}>{rowData.name}</Text>
+                  <Text style={this.styles.item}>{rowData.name}</Text>
                 </View>
               </TouchableHighlight>
             );
@@ -100,7 +102,7 @@ export default class PollsList extends Component {
 
 
   _onPress(rowID) {
-    this.props.navigation.navigate('Detail')
+    this.props.navigation.navigate('Detail',rowID)
 
  }
 

@@ -10,10 +10,22 @@ export const PollsListStack = StackNavigator ({
       screen: PollsList,
       navigationOptions: {
         title: 'Polls',
+        //headerRight: <Button color='#841584' />,
+        //headerTintColor: '#F6F6F6',
       }
   },
   Detail : {
       screen: Detail,
+      /*navigationOptions: ({navigation}) => {
+        return (
+          title: 'Categories',
+          headerRight: (
+             <Button
+               title={ 'Help' }
+              />
+           ),
+        );
+      }*/
       navigationOptions: {
         title: 'Categories'
       }

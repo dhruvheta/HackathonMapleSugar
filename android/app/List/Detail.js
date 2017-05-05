@@ -17,7 +17,14 @@ export default class Detail extends Component {
     super();
 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
+     //const value = this.props.navigation.state.params
+     const state = this.props.navigation;
+    // state.routeName === 'Profile'
+    //return (
+      //<Text>Name: {state.params.name}</Text>
+    //);
+    console.log('stateeeeeee');
+    console.log(state.params)
     this.state = {
       dataSource: ds.cloneWithRows(['cat1', 'cat2', 'cat3', 'cat4', 'cat5', 'cat6','cat7','cat8']),
     };
@@ -41,6 +48,24 @@ export default class Detail extends Component {
         },
       });
 }
+
+  /*getPollsList() {
+    return fetch('https://sleepy-sierra-94063.herokuapp.com/poll')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.handlePollsList(responseJson.items);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+   }
+
+   handlePollsList(items) {
+     this.setState({
+       dataSource: this.state.dataSource.cloneWithRows(items),
+       loaded: true
+     });
+   }*/
 
   render() {
 

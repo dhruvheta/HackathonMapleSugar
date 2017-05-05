@@ -12,10 +12,10 @@ import {
 } from 'react-native';
 
 export default class Results extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
-    this.results = this.props.results;
+    this.results = props.navigation.state.params;
 
     this.styles = StyleSheet.create({
       resultText: {
@@ -33,13 +33,16 @@ export default class Results extends Component {
   }
 
   render() {
-    const instructionList = this.results.map((result, index) =>
+    const items = this.results.categories.flatMap((category) =>
+      {return category.options;}
+    );
+    const resultList = items.map((result, index) =>
       <Text style={this.styles.resultText}>{result.name}: {result.options.upvoteCount - result.options.downvoteCount}</Text>
     );
 
     return (
       <View style={this.styles.view}>
-        {instructionList}
+        {resultList}
       </View>
     );
   }

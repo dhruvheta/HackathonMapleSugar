@@ -71,6 +71,7 @@ export default class Detail extends Component {
       .then((response) => response.json())
       .then((responseJson) => {
         this.handlePollsList(responseJson.poll.categories);
+        this.poll = responseJson.poll;
       })
       .catch((error) => {
         console.error(error);
@@ -85,13 +86,15 @@ export default class Detail extends Component {
    }
 
    onResultsButtonPress() {
-     this.props.navigation.navigate('Results', this.state.dataSource);
+     this.props.navigation.navigate('Results', this.poll);
    }
 
   render() {
     return (
       <View>
-        <Button title='Results' onPress={this.onResultsButtonPress}></Button>
+        <Button title='Results' onPress={() => {
+                  this.onResultsButtonPress();
+                }}></Button>
         <ListView contentContainerStyle={this.styles.list}
           dataSource={this.state.dataSource}
           renderRow={(rowData) => {

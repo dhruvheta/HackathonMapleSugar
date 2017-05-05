@@ -11,102 +11,98 @@ import {
   ToolbarAndroid,
 } from 'react-native';
 
-
 export default class PollsList extends Component {
   constructor() {
     super();
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.onButtonPress = () => {
       Alert.alert('List item has been pressed!' + this.props.name);
     };
-
     this.state = {
       //dataSource: ds.cloneWithRows(['Snacks', 'CAT Equipments']),//['Snacks', 'CAT Equipments']
-      dataSource: ds.cloneWithRows(['Snacks', 'CAT Equipments']    )
+    dataSource: dataSource.cloneWithRows(['Snacks', 'CAT Equipments']    ),
+      //dataSource: dataSource.cloneWithRows(test),
+      isLoading: true
     };
     this.styles = StyleSheet.create({
         row: {
           flexDirection: 'row',
           justifyContent: 'center',
-          padding: 30,
-          borderBottomColor: '#000000',
-          borderBottomWidth:10
+        //  backgroundColor: 'white',
+        //  padding: 45,
+          //width:180,
+          backgroundColor: '#F6F6F6',
+          borderBottomColor: '#cccccc',
+          borderBottomWidth:3,
+          //paddingRight:10,
+          paddingLeft:5,
+          paddingTop:25,
+          paddingBottom:25,
           //backgroundColor: '#F6F6F6',
         },
-        thumb: {
-          width: 64,
-          height: 64,
-        },
-        text: {
-          flex: 1,
-        fontSize: 19,
-        },
-        toolbar: {
-          backgroundColor: '#e9eaed',
-          height: 56,
-        },
+        item:{
+          fontSize:22,
+          //padding: 35,
+          color: '#000000',
+          width: 175,
+          justifyContent: 'center',
+          backgroundColor: '#F6F6F6',
+          //padding: 25,
+          //width:150
+        }
       });
-
+       this.getPollsList();
+   }
+   getPollsList() {
+     return fetch('https://sleepy-sierra-94063.herokuapp.com/polls')
+       .then((response) => response.json())
+       .then((responseJson) => {
+         this.handlePollsList(responseJson.items);
+       })
+       .catch((error) => {
+         console.error(error);
+       });
 }
 
-  render() {
+      handlePollsList(items) {
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(items),
+          loaded: true
+        });
+      }
+
+    render() {
       _navigator = this.props.navigator;
-      list= this._getPollsList();
-      console.log('NOOOOO results:::::');
-      console.log(list);
-    return (
-      <View>
+      return (
+        <View>
 
-      <View style={{backgroundColor: '#F6F6F6',justifyContent: 'center'}}>
+        <View style={{backgroundColor: '#F6F6F6',justifyContent: 'center'}}>
 
-      <View style={{padding:10}}></View>
 
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={(rowData) => {
-          return (
-            <TouchableHighlight  onPress={() => {
-                      this._onPress(rowData);
-                    }}>
-              <View name={rowData} style={this.styles.row} >
-                <Text style={{fontSize:35}}>{rowData.name}</Text>
-              </View>
-            </TouchableHighlight>
-          );
-        }}
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) => {
+            return (
+              <TouchableHighlight  onPress={() => {
+                        this._onPress(rowData.id);
+                      }}>
+                <View name={rowData} style={this.styles.row} >
+                  <Text style={this.styles.item}>{rowData.name}</Text>
+                </View>
+              </TouchableHighlight>
+            );
+          }}
 
-      />
-  </View>
-      </View>
-    );
+        />
+        </View>
+        </View>
+      );
+
   }
-  async _getPollsList() {
-  /*return fetch('https://sleepy-sierra-94063.herokuapp.com/polls')
-    .then((response) => response.json())
-    .then((responseJson) => {
-      console.log(responseJson.items); //Debug
-      return responseJson.items;
-    })
-    .catch((error) => {
-      console.error(error);
-    });*/
 
-
-    //async function getMoviesFromApi() {
-   try {
-     let response = await fetch('https://sleepy-sierra-94063.herokuapp.com/polls');
-     let responseJson = await response.json();
-     console.log('With results:::::');
-     console.log(responseJson.items);
-     return responseJson.items;
-   } catch(error) {
-     console.error(error);
-   }
-// }
- }
 
   _onPress(rowID) {
-    this.props.navigation.navigate('Detail')
+    this.props.navigation.navigate('Detail',rowID)
 
  }
 

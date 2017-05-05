@@ -11,12 +11,18 @@ import {
   View
 } from 'react-native';
 
+const onThumbsDownButtonClick = () => {
+  Alert.alert('Button has been pressed!');
+};
 export default class ItemDetails extends Component {
-  constructor() {
-    super();
+  static navigationOptions = ({ navigation }) => ({
+    title: `${navigation.state.params.name}`
+  });
+  constructor(props) {
+    super(props);
 
-    this.item = this.props.item;
-    this.category = this.props.category;
+    //this.item = this.props.item;
+    this.category = props.navigation.state.params;
     this.voting = false;
 
     this.styles = StyleSheet.create({
@@ -24,13 +30,14 @@ export default class ItemDetails extends Component {
         backgroundColor: '#ffab17',
         color: '#000000',
         fontSize: 24,
-        textAlign: 'center'
+      //  textAlign: 'center'
       },
       detailText: {
-        backgroundColor: '#999999',
-        color: '#FFFFFF',
+        //backgroundColor: '#999999',
+        color: '#000000',
+        padding:2,
         fontSize: 14,
-        textAlign: 'center'
+        //textAlign: 'center'
       },
       detailView: {
         flex: 1,
@@ -39,12 +46,17 @@ export default class ItemDetails extends Component {
       nameText: {
         color: '#000000',
         fontSize: 40,
-        textAlign: 'center',
+      //  textAlign: 'center',
         height: 50
       },
       picture: {
-        height: 200,
-        width: 200
+        height: 150,
+        width: 150,
+        justifyContent: 'center',
+        //margin:5,
+        marginLeft:15,
+        marginTop:10,
+        marginBottom:10
       },
       thumbsDown: {
         height: 128,
@@ -74,43 +86,43 @@ export default class ItemDetails extends Component {
     Alert.alert('Thumbs up!');
   }
 
-  onThumbsDownButtonClick() {
+  onThumbsDownButtonClick1() {
     Alert.alert('Thumbs down!');
   }
 
   render() {
-    const instructionList = this.instructions.map((instruction, index) =>
+    /*const instructionList = this.instructions.map((instruction, index) =>
       <Text style={(index + 1) % 2 == 0 ? this.styles.evenRow : this.styles.oddRow}>{index+1}. {instruction}</Text>
-    );
+    );*/
 
     return (
       <View style={this.styles.view}>
         <Image
-        //  source={uri: this.item.imageUrl}
-        source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
+          source={{uri: this.category.imageUrl}}
+        //source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
 
           style={this.styles.picture}
         />
         <View style={this.styles.detailView}>
-          <Text style={this.styles.nameText}>{this.item.name}</Text>
-          <Text style={this.styles.categoryText}>{this.category.name}</Text>
-          <Text style={this.styles.detailText}>{this.item.attributes.portionSize}</Text>
-          <Text style={this.styles.detailText}>{this.item.attributes.calories}</Text>
-          <Text style={this.styles.detailText}>{this.item.attributes.fat}</Text>
-          <Text style={this.styles.detailText}>{this.item.attributes.carbs}</Text>
-          <Text style={this.styles.detailText}>{this.item.attributes.protein}</Text>
-          <Text style={this.styles.detailText}>{this.item.attributes.sugar}</Text>
-          <Text style={this.styles.detailText}>{this.item.attributes.sodium}</Text>
-          <Text style={this.styles.detailText}>{this.item.attributes.fiber}</Text>
+          <Text style={this.styles.detailText}>PortionSize -> {this.category.attributes.portionSize}</Text>
+          <Text style={this.styles.detailText}>Calories -> {this.category.attributes.calories}</Text>
+          <Text style={this.styles.detailText}>Fat -> {this.category.attributes.fat}</Text>
+          <Text style={this.styles.detailText}>Carbs -> {this.category.attributes.carbs}</Text>
+          <Text style={this.styles.detailText}>Protein -> {this.category.attributes.protein}</Text>
+          <Text style={this.styles.detailText}>Sugar -> {this.category.attributes.sugar}</Text>
+          <Text style={this.styles.detailText}>Sodium -> {this.category.attributes.sodium}</Text>
+          <Text style={this.styles.detailText}>Fiber -> {this.category.attributes.fiber}</Text>
         </View>
         <View style={this.styles.thumbsView}>
           <Image
-            onButtonClick={this.onThumbsUpButtonClick}
-           source={require('./thumbsdown_128.png')}
+          onButtonClick={() => {
+                    this.onThumbsUpButtonClick();
+                  }}
+           source={require('./thumbsup_128.png')}
             style={this.styles.thumbsUp}
           />
           <Image
-            onButtonClick={this.onThumbsDownButtonClick}
+            onPress={this.onThumbsDownButtonClick}
             source={require('./thumbsdown_128.png')}
             style={this.styles.thumbsDown}
           />

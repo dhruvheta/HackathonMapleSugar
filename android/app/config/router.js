@@ -5,36 +5,26 @@ import PollsList from '../List/PollsList'
 import Detail from '../List/Detail'
 import ItemList from '../List/ItemList'
 import Results from '../../../components/Results'
-import ItemDetails from '../dashboard/ItemDetails'
+import ItemDetails from '../dashboard/itemDetails'
 export const PollsListStack = StackNavigator ({
   PollsList : {
       screen: PollsList,
       navigationOptions: {
         title: 'Polls',
+        //headerRight: <Button color='#841584' />,
+        //headerTintColor: '#F6F6F6',
       }
   },
   Detail : {
       screen: Detail,
-      navigationOptions: {
-        title: 'Categories'
-      }
   },
   ItemList : {
-      screen: ItemList,
-      navigationOptions: {
-        title: 'Items'
-      }
+      screen: ItemList
   },
   ItemDetails : {
-      screen: ItemDetails,
-      navigationOptions: {
-        title: 'Item Detail'
-      }
+      screen: ItemDetails
   },
   Results: {
-    screen: Results,
-    navigationOptions: {
-      title: 'Poll Results'
-    }
+    screen: Results
   }
 })

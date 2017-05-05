@@ -9,14 +9,23 @@ import {
   View,
   Alert,
   ToolbarAndroid,
+  Button,
+  AsyncStorage
 } from 'react-native';
 
-
+const onButtonPress = () => {
+  Alert.alert('Button has been pressed!');
+};
 export default class Detail extends Component {
-  constructor() {
-    super();
-
+  static navigationOptions = {
+    title: 'Categories',
+    headerRight: <Button title="Info"  onPress={onButtonPress}/>
+  };
+  constructor(props) {
+    super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+    this.pollId = props.navigation.state.params
 
     this.state = {
       dataSource: ds.cloneWithRows(['cat1', 'cat2', 'cat3', 'cat4', 'cat5', 'cat6','cat7','cat8']),
@@ -42,35 +51,60 @@ export default class Detail extends Component {
       });
 }
 
-  render() {
+  componentDidMount() {
+    const {params} = this.props.navigation.state
+    this.getPollsList()
+  }
 
+  async getPollsList() {
+    try {
+      const storedUser = await AsyncStorage.getItem('@DataStore:user');
+      this.state.user = JSON.parse(storedUser)
+    } catch (error) {
+      // Error saving data
+    }
+    data = { token: this.state.user.idToken}
+    url = `https://sleepy-sierra-94063.herokuapp.com/poll/${this.pollId}?token=${data.token}`
+    return fetch(url)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.handlePollsList(responseJson.poll.categories);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+   }
+
+   handlePollsList(items) {
+     this.setState({
+       dataSource: this.state.dataSource.cloneWithRows(items),
+       loaded: true
+     });
+   }
+
+  render() {
     return (
       <View>
-
-
-      <ListView contentContainerStyle={this.styles.list}
-        dataSource={this.state.dataSource}
-        renderRow={(rowData) => {
-          return (
-            <TouchableHighlight  onPress={() => {
-                      this._onPress(rowData);
-                    }}>
-              <View name={rowData} style={this.styles.row} >
-                <Text style={this.styles.item}>{rowData}</Text>
-              </View>
-            </TouchableHighlight>
-          );
-        }}
-
-      />
-
-
+        <ListView contentContainerStyle={this.styles.list}
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) => {
+            return (
+              <TouchableHighlight  onPress={() => {
+                        this._onPress(rowData);
+                      }}>
+                <View style={this.styles.row} >
+                  <Text style={this.styles.item}>{rowData.name}</Text>
+                </View>
+              </TouchableHighlight>
+            );
+          }}
+        />
       </View>
     );
   }
 
-  _onPress(rowID) {
-    this.props.navigation.navigate('ItemList')
+  _onPress(rowData) {
+    this.props.navigation.navigate('ItemList', rowData)
   }
 
 }

@@ -72,8 +72,9 @@ class USnack extends Component {
   async _signIn() {
     GoogleSignin.signIn()
     .then(async (user) => {
-      data = { userId: user.id, token: user.idToken, photo: user.photo, name: user.name, email: user.email }
+      data = { userId: user.id, googleToken: user.idToken, photo: user.photo, name: user.name, email: user.email }
       let params = querystring.stringify(data);
+      console.log(params)
       url = `https://sleepy-sierra-94063.herokuapp.com/users/add?${params}`
       await fetch(url, {
         method: 'POST',
